@@ -1,4 +1,4 @@
-## Node.js server for PhoneBook (with Dockerfile)
+## Node.js server for WaterTracker app (with Dockerfile)
 
 ### Routs:
 
@@ -13,7 +13,9 @@
 - patch `/` update field Subscription
 - patch `/avatars` update users avater
 
-#### contacts-routs
+## Will be fixed
+
+#### waternotes-routs
 
 - get `/` get all contacts
 - get `/:id` get contact by id
@@ -25,4 +27,4 @@
 ### Comands:
 
 - `npm start` &mdash; server start in mode production
-- `npm run start:dev` &mdash; server start in mode development
+- `npm run dev` &mdash; server start in mode development
