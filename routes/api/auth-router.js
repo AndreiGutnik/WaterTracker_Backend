@@ -11,6 +11,7 @@ import { validateBody } from "../../decorators/index.js";
 import {
   userSignupSchema,
   userSigninSchema,
+  updateUserWaterRateSchema,
   // userEmailSchema,
 } from "../../schemas/users-schemas.js";
 
@@ -43,6 +44,13 @@ authRouter.get("/current", authenticate, authController.getCurrent);
 authRouter.post("/logout", authenticate, authController.signout);
 
 authRouter.patch("/", authenticate, authController.updateUser);
+
+authRouter.patch(
+  "/waterrate",
+  authenticate,
+  validateBody(updateUserWaterRateSchema),
+  authController.waterRate
+);
 
 authRouter.patch(
   "/avatars",

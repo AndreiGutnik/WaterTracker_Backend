@@ -14,7 +14,7 @@ import { ctrlWrapper } from "../decorators/index.js";
 const { JWT_SECRET } = process.env;
 
 const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw HttpError(409, "Email is use");
@@ -70,11 +70,12 @@ const signin = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { email, name, gender } = req.user;
+  const { email, name, gender, waterRate } = req.user;
   res.json({
     name,
     email,
     gender,
+    waterRate,
   });
 };
 
@@ -93,6 +94,18 @@ const updateUser = async (req, res) => {
 
   res.json({
     user,
+  });
+};
+
+const waterRate = async (req, res) => {
+  const { _id } = req.user;
+  const user = await User.findOneAndUpdate(_id, req.body);
+  if (!user) {
+    throw HttpError(404, `Not found`);
+  }
+
+  res.json({
+    waterRate: user.waterRate,
   });
 };
 
@@ -154,6 +167,7 @@ export default {
   signout: ctrlWrapper(signout),
   updateavatar: ctrlWrapper(updateavatar),
   updateUser: ctrlWrapper(updateUser),
+  waterRate: ctrlWrapper(waterRate),
   // verificationEmail: ctrlWrapper(verificationEmail),
   // resendVerify: ctrlWrapper(resendVerify),
 };

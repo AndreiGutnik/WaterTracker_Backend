@@ -483,6 +483,11 @@
               "type": "string",
               "description": "User's gender",
               "example": "male || female"
+            },
+            "waterRate": {
+              "type": "number",
+              "description": "User's gender",
+              "example": 1500
             }
           }
         }
@@ -552,7 +557,7 @@
         "type": "object",
         "required": [],
         "properties": {
-          "waterrate": {
+          "waterRate": {
             "type": "number",
             "description": "Water Rate",
             "example": 1500
@@ -565,7 +570,7 @@
         "items": {
           "type": "object",
           "properties": {
-            "waterrate": {
+            "waterRate": {
               "type": "number",
               "description": "Water Rate",
               "example": 1500
