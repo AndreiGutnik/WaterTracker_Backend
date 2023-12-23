@@ -78,6 +78,18 @@ const signout = async (req, res) => {
   res.status(204).send();
 };
 
+const updateUser = async (req, res) => {
+  const { _id } = req.user;
+  const user = await User.findOneAndUpdate(_id, req.body);
+  if (!user) {
+    throw HttpError(404, `Not found`);
+  }
+
+  res.json({
+    user,
+  });
+};
+
 const updateavatar = async (req, res) => {
   const { _id } = req.user;
 
@@ -135,6 +147,7 @@ export default {
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
   updateavatar: ctrlWrapper(updateavatar),
+  updateUser: ctrlWrapper(updateUser),
   // verificationEmail: ctrlWrapper(verificationEmail),
   // resendVerify: ctrlWrapper(resendVerify),
 };
