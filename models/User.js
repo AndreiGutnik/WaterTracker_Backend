@@ -24,6 +24,11 @@ const userchema = new Schema(
       maxLength: 24,
       default: "User",
     },
+    waterRate: {
+      type: Number,
+      max: 15000,
+      default: 0,
+    },
     avatarURL: {
       type: String,
       required: true,
