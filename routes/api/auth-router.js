@@ -11,7 +11,6 @@ import { validateBody } from "../../decorators/index.js";
 import {
   userSignupSchema,
   userSigninSchema,
-  updateUserSubscriptionSchema,
   // userEmailSchema,
 } from "../../schemas/users-schemas.js";
 

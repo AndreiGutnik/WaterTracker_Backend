@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import path from "path";
 import gravatar from "gravatar";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 
 import "dotenv/config";
 
@@ -29,7 +29,13 @@ const signup = async (req, res) => {
     password: hashPassword,
     // verificationToken,
   });
+  // const verifyEmail = {
+  //   to: email,
+  //   subject: "Verify email",
+  //   html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationToken}">Click verify email</a>`,
+  // };
 
+  // await sendEmail(verifyEmail);
   res.status(201).json({
     user: {
       name: newUser.name,
