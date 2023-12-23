@@ -36,11 +36,9 @@ const signup = async (req, res) => {
   // };
 
   // await sendEmail(verifyEmail);
-  console.log(newUser);
   res.status(201).json({
     user: {
       email: newUser.email,
-      subscription: newUser.subscription,
     },
   });
 };
@@ -67,16 +65,17 @@ const signin = async (req, res) => {
     token,
     user: {
       email: user.email,
-      subscription: user.subscription,
     },
   });
 };
 
 const getCurrent = async (req, res) => {
-  const { email, subscription } = req.user;
+  const { email, name, gender, waterRate } = req.user;
   res.json({
+    name,
     email,
-    subscription,
+    gender,
+    waterRate,
   });
 };
 
@@ -84,6 +83,30 @@ const signout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
   res.status(204).send();
+};
+
+const updateUser = async (req, res) => {
+  const { _id } = req.user;
+  const user = await User.findOneAndUpdate(_id, req.body);
+  if (!user) {
+    throw HttpError(404, `Not found`);
+  }
+
+  res.json({
+    user,
+  });
+};
+
+const waterRate = async (req, res) => {
+  const { _id } = req.user;
+  const user = await User.findOneAndUpdate(_id, req.body);
+  if (!user) {
+    throw HttpError(404, `Not found`);
+  }
+
+  res.json({
+    waterRate: user.waterRate,
+  });
 };
 
 const updateavatar = async (req, res) => {
@@ -143,6 +166,8 @@ export default {
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
   updateavatar: ctrlWrapper(updateavatar),
+  updateUser: ctrlWrapper(updateUser),
+  waterRate: ctrlWrapper(waterRate),
   // verificationEmail: ctrlWrapper(verificationEmail),
   // resendVerify: ctrlWrapper(resendVerify),
 };

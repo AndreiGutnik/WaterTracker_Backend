@@ -1,11 +1,17 @@
 import express from "express";
 
 import authController from "../../controllers/auth-controllers.js";
-import { authenticate, isEmptyBody, upload, handleImage } from "../../middleware/index.js";
+import {
+  authenticate,
+  isEmptyBody,
+  upload,
+  handleImage,
+} from "../../middleware/index.js";
 import { validateBody } from "../../decorators/index.js";
 import {
   userSignupSchema,
   userSigninSchema,
+  updateUserWaterRateSchema,
   // userEmailSchema,
 } from "../../schemas/users-schemas.js";
 
@@ -13,6 +19,7 @@ const authRouter = express.Router();
 
 //upload.array("avatar", 6);
 //upload.fields([{name:"avatar", maxCount: 1}])
+
 authRouter.post(
   "/register",
   upload.single("avatar"),
@@ -21,7 +28,12 @@ authRouter.post(
   authController.signup
 );
 
-authRouter.post("/login", isEmptyBody, validateBody(userSigninSchema), authController.signin);
+authRouter.post(
+  "/login",
+  isEmptyBody,
+  validateBody(userSigninSchema),
+  authController.signin
+);
 
 // authRouter.get("/verify/:verificationToken", authController.verificationEmail);
 
@@ -30,6 +42,15 @@ authRouter.post("/login", isEmptyBody, validateBody(userSigninSchema), authContr
 authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.signout);
+
+authRouter.patch("/", authenticate, authController.updateUser);
+
+authRouter.patch(
+  "/waterrate",
+  authenticate,
+  validateBody(updateUserWaterRateSchema),
+  authController.waterRate
+);
 
 authRouter.patch(
   "/avatars",
