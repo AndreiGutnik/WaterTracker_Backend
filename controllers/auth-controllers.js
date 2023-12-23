@@ -14,7 +14,7 @@ import { ctrlWrapper } from "../decorators/index.js";
 const { JWT_SECRET } = process.env;
 
 const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
     throw HttpError(409, "Email is use");
@@ -29,18 +29,11 @@ const signup = async (req, res) => {
     password: hashPassword,
     verificationToken,
   });
-  // const verifyEmail = {
-  //   to: email,
-  //   subject: "Verify email",
-  //   html: `<a target="_blank" href="${BASE_URL}/users/verify/${verificationToken}">Click verify email</a>`,
-  // };
-
-  // await sendEmail(verifyEmail);
 
   res.status(201).json({
     user: {
+      name: newUser.name,
       email: newUser.email,
-      subscription: newUser.subscription,
     },
   });
 };
@@ -51,9 +44,9 @@ const signin = async (req, res) => {
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
-  if (!user.verify) {
-    throw HttpError(401, "Email is not verify");
-  }
+  // if (!user.verify) {
+  //   throw HttpError(401, "Email is not verify");
+  // }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password is wrong");
@@ -67,16 +60,15 @@ const signin = async (req, res) => {
     token,
     user: {
       email: user.email,
-      subscription: user.subscription,
     },
   });
 };
 
 const getCurrent = async (req, res) => {
-  const { email, subscription } = req.user;
+  const { email, name } = req.user;
   res.json({
+    name,
     email,
-    subscription,
   });
 };
 

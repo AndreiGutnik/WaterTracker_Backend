@@ -1,7 +1,12 @@
 import express from "express";
 
 import authController from "../../controllers/auth-controllers.js";
-import { authenticate, isEmptyBody, upload, handleImage } from "../../middleware/index.js";
+import {
+  authenticate,
+  isEmptyBody,
+  upload,
+  handleImage,
+} from "../../middleware/index.js";
 import { validateBody } from "../../decorators/index.js";
 import {
   userSignupSchema,
@@ -14,6 +19,7 @@ const authRouter = express.Router();
 
 //upload.array("avatar", 6);
 //upload.fields([{name:"avatar", maxCount: 1}])
+
 authRouter.post(
   "/register",
   upload.single("avatar"),
@@ -22,7 +28,12 @@ authRouter.post(
   authController.signup
 );
 
-authRouter.post("/login", isEmptyBody, validateBody(userSigninSchema), authController.signin);
+authRouter.post(
+  "/login",
+  isEmptyBody,
+  validateBody(userSigninSchema),
+  authController.signin
+);
 
 // authRouter.get("/verify/:verificationToken", authController.verificationEmail);
 
@@ -35,7 +46,7 @@ authRouter.post("/logout", authenticate, authController.signout);
 authRouter.patch(
   "/",
   authenticate,
-  validateBody(updateUserSubscriptionSchema),
+  // validateBody(updateUserSubscriptionSchema),
   authController.updateSubscription
 );
 
