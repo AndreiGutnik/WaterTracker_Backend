@@ -6,12 +6,6 @@ export const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userchema = new Schema(
   {
-    name: {
-      type: String,
-      minLength: 3,
-      maxLength: 32,
-      required: true,
-    },
     email: {
       type: String,
       match: emailRegexp,
@@ -20,12 +14,20 @@ const userchema = new Schema(
     },
     password: {
       type: String,
-      minLength: 6,
+      minLength: 8,
+      maxLength: 48,
       required: true,
     },
     gender: {
       type: String,
       enum: ["male", "female"],
+      default: "male",
+    },
+    name: {
+      type: String,
+      minLength: 3,
+      maxLength: 24,
+      default: "User",
     },
     avatarURL: {
       type: String,
@@ -35,6 +37,13 @@ const userchema = new Schema(
       type: String,
       default: null,
     },
+    // verify: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // verificationToken: {
+    //   type: String,
+    // },
   },
   { versionKey: false, timestamps: true }
 );
