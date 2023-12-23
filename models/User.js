@@ -14,29 +14,31 @@ const userchema = new Schema(
     },
     password: {
       type: String,
-      minLength: 6,
+      minLength: 8,
+      maxLength: 48,
       required: true,
+    },
+    name: {
+      type: String,
+      minLength: 3,
+      maxLength: 24,
+      default: "User",
     },
     avatarURL: {
       type: String,
       required: true,
     },
-    subscription: {
-      type: String,
-      enum: ["starter", "pro", "business"],
-      default: "starter",
-    },
     token: {
       type: String,
       default: null,
     },
-    verify: {
-      type: Boolean,
-      default: false,
-    },
-    verificationToken: {
-      type: String,
-    },
+    // verify: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // verificationToken: {
+    //   type: String,
+    // },
   },
   { versionKey: false, timestamps: true }
 );

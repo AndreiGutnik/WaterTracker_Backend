@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import { HttpError } from "../helpers/index.js";
+import { HttpError, cloudinary } from "../helpers/index.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import fs from "fs/promises";
@@ -21,13 +21,13 @@ const signup = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-  const verificationToken = nanoid();
+  // const verificationToken = nanoid();
   const avatarURL = gravatar.url(email);
   const newUser = await User.create({
     ...req.body,
     avatarURL,
     password: hashPassword,
-    verificationToken,
+    // verificationToken,
   });
   // const verifyEmail = {
   //   to: email,
@@ -51,9 +51,9 @@ const signin = async (req, res) => {
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
-  if (!user.verify) {
-    throw HttpError(401, "Email is not verify");
-  }
+  // if (!user.verify) {
+  //   throw HttpError(401, "Email is not verify");
+  // }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password is wrong");
@@ -86,27 +86,13 @@ const signout = async (req, res) => {
   res.status(204).send();
 };
 
-const updateSubscription = async (req, res) => {
-  const { _id } = req.user;
-  const user = await User.findOneAndUpdate(_id, req.body);
-  if (!user) {
-    throw HttpError(404, `Not found`);
-  }
-
-  res.json({
-    user,
-  });
-};
-
 const updateavatar = async (req, res) => {
   const { _id } = req.user;
 
-  const { path: oldPath, filename } = req.file;
-  const avatarsPath = path.join("public", "avatars");
-  const newPath = path.join(avatarsPath, filename);
-  await fs.rename(oldPath, newPath);
-  const avatarURL = path.join("avatars", filename);
-
+  const { url: avatarURL } = await cloudinary.uploader.upload(req.file.path, {
+    folder: "WaterTracker/avatars",
+  });
+  await fs.unlink(req.file.path);
   const user = await User.findByIdAndUpdate(_id, { avatarURL });
   if (!user) {
     throw HttpError(404, `Not found`);
@@ -156,7 +142,6 @@ export default {
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
-  updateSubscription: ctrlWrapper(updateSubscription),
   updateavatar: ctrlWrapper(updateavatar),
   // verificationEmail: ctrlWrapper(verificationEmail),
   // resendVerify: ctrlWrapper(resendVerify),
