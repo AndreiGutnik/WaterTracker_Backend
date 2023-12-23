@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import path from "path";
 import gravatar from "gravatar";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 
 import "dotenv/config";
 
@@ -36,7 +36,7 @@ const signup = async (req, res) => {
   // };
 
   // await sendEmail(verifyEmail);
-
+  console.log(newUser);
   res.status(201).json({
     user: {
       email: newUser.email,
