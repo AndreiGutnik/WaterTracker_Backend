@@ -20,14 +20,19 @@ const userchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female"],
-      default: "male",
+      enum: ["Male", "Female"],
+      default: "Male",
     },
     name: {
       type: String,
       minLength: 3,
       maxLength: 24,
       default: "User",
+    },
+    waterRate: {
+      type: Number,
+      max: 15000,
+      default: 0,
     },
     avatarURL: {
       type: String,
