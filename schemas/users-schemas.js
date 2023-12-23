@@ -2,9 +2,9 @@ import Joi from "joi";
 import { emailRegexp } from "../models/User.js";
 
 export const userSignupSchema = Joi.object({
-  name: Joi.string().min(3).max(32).required(),
+  name: Joi.string().min(3).max(32),
   email: Joi.string().pattern(emailRegexp).required(),
-  gender: Joi.string().valid("mail", "female"),
+  gender: Joi.string().valid("male", "female"),
   password: Joi.string().min(6).required(),
 });
 

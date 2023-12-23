@@ -38,7 +38,6 @@ const signup = async (req, res) => {
   // await sendEmail(verifyEmail);
   res.status(201).json({
     user: {
-      name: newUser.name,
       email: newUser.email,
     },
   });
@@ -71,10 +70,11 @@ const signin = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { email, name } = req.user;
+  const { email, name, gender } = req.user;
   res.json({
     name,
     email,
+    gender,
   });
 };
 

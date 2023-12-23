@@ -69,11 +69,23 @@
           },
           "400": {
             "description": "Bad request (invalid request body)",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
           },
           "409": {
             "description": "Provided email already exists",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Email is use"
+                }
+              }
+            }
           }
         }
       }
@@ -111,15 +123,23 @@
           },
           "400": {
             "description": "Bad request (invalid request body)",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
           },
           "401": {
             "description": "Email or password is wrong",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Email or password is wrong"
+                }
+              }
+            }
           }
         }
       }
@@ -135,12 +155,24 @@
 
         "responses": {
           "204": {
-            "description": "User signed out ",
-            "content": {}
+            "description": "User signed out",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "User signed out"
+                }
+              }
+            }
           },
           "401": {
             "description": "Not authorized",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
           }
         }
       }
@@ -192,9 +224,25 @@
               }
             }
           },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
           "404": {
             "description": "File not found",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "File not found"
+                }
+              }
+            }
           }
         }
       }
@@ -221,7 +269,13 @@
           },
           "401": {
             "description": "Not authorized",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
           }
         }
       }
@@ -261,11 +315,23 @@
           },
           "400": {
             "description": "Bad request",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
           },
           "401": {
             "description": "Not authorized",
-            "content": {}
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
           }
         }
       }
@@ -278,11 +344,6 @@
         "type": "object",
         "required": ["email", "password"],
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "user"
-          },
           "email": {
             "type": "string",
             "description": "User's email",
@@ -371,6 +432,11 @@
               "type": "string",
               "description": "User's email",
               "format": "email"
+            },
+            "gender": {
+              "type": "string",
+              "description": "User's gender",
+              "example": "male || female"
             }
           }
         }
@@ -392,17 +458,22 @@
 
       "UpdateRequest": {
         "type": "object",
-        "required": ["email", "name"],
+        "required": [],
         "properties": {
           "name": {
             "type": "string",
             "description": "User's name",
-            "example": "user"
+            "example": "User"
           },
           "email": {
             "type": "string",
             "description": "User's email",
             "format": "email"
+          },
+          "gender": {
+            "type": "string",
+            "description": "Gender's name",
+            "example": "male"
           }
         }
       },
@@ -415,12 +486,17 @@
             "name": {
               "type": "string",
               "description": "User's name",
-              "example": "user"
+              "example": "User"
             },
             "email": {
               "type": "string",
               "description": "User's email",
               "format": "email"
+            },
+            "gender": {
+              "type": "string",
+              "description": "Gender's name",
+              "example": "male || female"
             }
           }
         }
