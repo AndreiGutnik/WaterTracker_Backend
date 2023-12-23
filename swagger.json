@@ -6,7 +6,7 @@
     "description": "Showing off WaterTracker Backend"
   },
   "consumes": ["application/json", "multipart/form-data"],
-  "produces": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
   "servers": [{ "url": "http://localhost:5000" }],
 
   "tags": [
@@ -183,16 +183,7 @@
         "tags": ["User"],
         "summary": "Upload user avatar",
 
-        "parameters": [
-          {
-            "in": "formData",
-            "name": "avatar",
-            "type": "file",
-            "description": "User's avatar",
-            "required": true
-          }
-        ],
-
+        "parameters": [],
         "security": [{ "Bearer": [] }],
 
         "requestBody": {
@@ -203,7 +194,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": {
+                  "avatar": {
                     "type": "string",
                     "format": "binary"
                   }
@@ -309,6 +300,61 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/users/waterrate": {
+      "patch": {
+        "tags": ["WaterRate"],
+        "summary": "Updating the amount of water the user should consume",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Update object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWaterRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Update successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateWaterResponse"
                 }
               }
             }
@@ -450,7 +496,7 @@
             "avatarURL": {
               "type": "string",
               "description": "Avatar's name",
-              "example": "avatars\\1703328966177_650662625_avatar.jpg"
+              "example": "http://res.cloudinary.com/de2jtjawf/image/upload/v1703364742/WaterTracker/avatars/zmsmi0zgrjwcxrlgxyzz.jpg"
             }
           }
         }
@@ -497,6 +543,32 @@
               "type": "string",
               "description": "Gender's name",
               "example": "male || female"
+            }
+          }
+        }
+      },
+
+      "UpdateWaterRequest": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "waterrate": {
+            "type": "number",
+            "description": "Water Rate",
+            "example": 1500
+          }
+        }
+      },
+
+      "UpdateWaterResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "waterrate": {
+              "type": "number",
+              "description": "Water Rate",
+              "example": 1500
             }
           }
         }
