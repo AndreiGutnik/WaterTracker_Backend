@@ -342,7 +342,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateWaterRequest"
+                "$ref": "#/components/schemas/UpdateWaterRateRequest"
               }
             }
           }
@@ -354,7 +354,122 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateWaterResponse"
+                  "$ref": "#/components/schemas/UpdateWaterRateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/water": {
+      "post": {
+        "tags": ["Water"],
+        "summary": "Adding a record of consumed water",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Object to be added",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWaterRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Add successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddWaterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/water/{id}": {
+      "put": {
+        "tags": ["Water"],
+        "summary": "Editing of the account of consumed water",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Object for editing",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditWaterRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Update successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditWaterResponse"
                 }
               }
             }
@@ -553,9 +668,9 @@
         }
       },
 
-      "UpdateWaterRequest": {
+      "UpdateWaterRateRequest": {
         "type": "object",
-        "required": [],
+        "required": ["waterRate"],
         "properties": {
           "waterRate": {
             "type": "number",
@@ -565,7 +680,7 @@
         }
       },
 
-      "UpdateWaterResponse": {
+      "UpdateWaterRateResponse": {
         "type": "array",
         "items": {
           "type": "object",
@@ -574,6 +689,78 @@
               "type": "number",
               "description": "Water Rate",
               "example": 1500
+            }
+          }
+        }
+      },
+
+      "AddWaterRequest": {
+        "type": "object",
+        "required": ["amountWater"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Time of water consumption",
+            "format": "date-time"
+          },
+          "amountWater": {
+            "type": "number",
+            "description": "Amount of water consumed",
+            "example": 250
+          }
+        }
+      },
+
+      "AddWaterResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Time of water consumption",
+              "format": "date-time"
+            },
+            "amountWater": {
+              "type": "number",
+              "description": "Amount of water consumed",
+              "example": 250
+            }
+          }
+        }
+      },
+
+      "EditWaterRequest": {
+        "type": "object",
+        "required": ["amountWater"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Time of water consumption",
+            "format": "date-time"
+          },
+          "amountWater": {
+            "type": "number",
+            "description": "Amount of water consumed",
+            "example": 250
+          }
+        }
+      },
+
+      "EditWaterResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Time of water consumption",
+              "format": "date-time"
+            },
+            "amountWater": {
+              "type": "number",
+              "description": "Amount of water consumed",
+              "example": 250
             }
           }
         }

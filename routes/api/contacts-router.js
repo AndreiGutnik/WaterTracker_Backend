@@ -10,8 +10,8 @@ import {
 import { validateBody } from "../../decorators/index.js";
 import {
   contactAddSchema,
-  contactUpdateSchema,
   contactFavoriteSchema,
+  contactUpdateSchema,
 } from "../../schemas/contacts-schemas.js";
 
 const router = express.Router();
@@ -22,7 +22,12 @@ router.get("/", contactsController.getAllContacts);
 
 router.get("/:id", isValidId, contactsController.getContactById);
 
-router.post("/", isEmptyBody, validateBody(contactAddSchema), contactsController.addContact);
+router.post(
+  "/",
+  isEmptyBody,
+  validateBody(contactAddSchema),
+  contactsController.addContact
+);
 
 router.delete("/:id", isValidId, contactsController.deleteContactById);
 
