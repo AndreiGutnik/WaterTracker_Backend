@@ -20,7 +20,7 @@ app.use(express.static("public"));
 
 app.use("/users", authRouter);
 // app.use("/api/contacts", contactsRouter);
-app.use("/api/water", waterRouter);
+app.use("/api/waternotes", waterRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {

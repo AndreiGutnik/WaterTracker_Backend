@@ -23,7 +23,7 @@
       "description": "Calculation of the daily rate of water consumption"
     },
     {
-      "name": "Water",
+      "name": "WaterNotes",
       "description": "Editing information on consumed water"
     },
     {
@@ -383,9 +383,9 @@
       }
     },
 
-    "/api/water": {
+    "/api/waternotes": {
       "post": {
-        "tags": ["Water"],
+        "tags": ["WaterNotes"],
         "summary": "Adding a record of consumed water",
 
         "parameters": [],
@@ -438,9 +438,9 @@
       }
     },
 
-    "/api/water/{id}": {
+    "/api/waternotes/{id}": {
       "put": {
-        "tags": ["Water"],
+        "tags": ["WaterNotes"],
         "summary": "Editing of the account of consumed water",
 
         "parameters": [
@@ -490,6 +490,74 @@
               "application/json": {
                 "example": {
                   "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/waternotes/{id} ": {
+      "delete": {
+        "tags": ["WaterNotes"],
+        "summary": "Deleting a record of consumed water",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Delete successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Delete successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Error in request"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not found"
                 }
               }
             }
@@ -597,7 +665,7 @@
             "gender": {
               "type": "string",
               "description": "User's gender",
-              "example": "male || female"
+              "example": "Male || Female"
             },
             "waterRate": {
               "type": "number",
@@ -639,7 +707,7 @@
           "gender": {
             "type": "string",
             "description": "Gender's name",
-            "example": "male"
+            "example": "Male"
           }
         }
       },
@@ -662,7 +730,7 @@
             "gender": {
               "type": "string",
               "description": "Gender's name",
-              "example": "male || female"
+              "example": "Male || Female"
             }
           }
         }

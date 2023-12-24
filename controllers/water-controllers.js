@@ -23,7 +23,7 @@ const getWaterById = async (req, res) => {
   const { _id: owner } = req.user;
   const { id } = req.params;
   const result = await Water.findOne({ _id: id, owner });
-  // const result = await Contact.findById(id);
+  // const result = await Water.findById(id);
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -46,7 +46,7 @@ const deleteWaterById = async (req, res) => {
   }
   // res.status(204).send();
   res.json({
-    message: "water deleted",
+    message: "Delete successfully",
   });
 };
 
