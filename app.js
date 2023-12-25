@@ -6,7 +6,8 @@ import swaggerDocument from "./swagger.json" assert { type: "json" };
 import "dotenv/config";
 
 import authRouter from "./routes/api/auth-router.js";
-import contactsRouter from "./routes/api/contacts-router.js";
+// import contactsRouter from "./routes/api/contacts-router.js";
+import waterRouter from "./routes/api/water-routes.js";
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/users", authRouter);
-app.use("/api/contacts", contactsRouter);
+// app.use("/api/contacts", contactsRouter);
+app.use("/api/waternotes", waterRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {

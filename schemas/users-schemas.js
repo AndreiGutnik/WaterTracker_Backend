@@ -24,5 +24,7 @@ export const userAvatarSchema = Joi.object({
 });
 
 export const updateUserWaterRateSchema = Joi.object({
-  waterRate: Joi.number().max(15000).required(),
+  waterRate: Joi.number().max(15000).required().messages({
+    "any.required": `missing field "waterRate"`,
+  }),
 });

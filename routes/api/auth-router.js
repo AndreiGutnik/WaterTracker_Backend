@@ -6,6 +6,7 @@ import {
   isEmptyBody,
   upload,
   handleImage,
+  isEmptyBodyWaterRate,
 } from "../../middleware/index.js";
 import { validateBody } from "../../decorators/index.js";
 import {
@@ -48,6 +49,7 @@ authRouter.patch("/", authenticate, authController.updateUser);
 authRouter.patch(
   "/waterrate",
   authenticate,
+  isEmptyBodyWaterRate,
   validateBody(updateUserWaterRateSchema),
   authController.waterRate
 );

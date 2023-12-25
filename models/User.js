@@ -20,8 +20,8 @@ const userchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["Male", "Female"],
-      default: "Male",
+      enum: ["male", "female"],
+      default: "male",
     },
     name: {
       type: String,
