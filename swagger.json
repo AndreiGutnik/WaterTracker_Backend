@@ -571,18 +571,7 @@
         "tags": ["Today"],
         "summary": "Get a list of all the user's water consumption records for the current day",
 
-        "parameters": [
-          {
-            "in": "query",
-            "name": "currentDate",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date",
-              "example": "2023-01-15"
-            }
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
 
         "responses": {
@@ -596,22 +585,22 @@
               }
             }
           },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Bad request"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Not authorized",
             "content": {
               "application/json": {
                 "example": {
                   "message": "Not authorized"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "message": "Invalid time value"
                 }
               }
             }
@@ -783,7 +772,7 @@
             "gender": {
               "type": "string",
               "description": "User's gender",
-              "example": "Male || Female"
+              "example": "male || female"
             },
             "waterRate": {
               "type": "number",
@@ -825,7 +814,7 @@
           "gender": {
             "type": "string",
             "description": "Gender's name",
-            "example": "Male"
+            "example": "male"
           }
         }
       },
@@ -848,7 +837,7 @@
             "gender": {
               "type": "string",
               "description": "Gender's name",
-              "example": "Male || Female"
+              "example": "male || female"
             }
           }
         }
@@ -957,15 +946,88 @@
         "items": {
           "type": "object",
           "properties": {
-            "date": {
-              "type": "string",
-              "description": "Time of water consumption",
-              "format": "date-time"
-            },
-            "amountWater": {
-              "type": "number",
-              "description": "Amount of water consumed",
-              "example": 250
+            "infoForDay": {
+              "type": "object",
+              "properties": {
+                "ownerId": {
+                  "type": "string",
+                  "description": "ownerId",
+                  "example": "6589653003eb8cee657a2155"
+                },
+                "currentDate": {
+                  "type": "date",
+                  "description": "Current date",
+                  "format": "date-time"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "User"
+                },
+                "email": {
+                  "type": "email",
+                  "description": "User's email",
+                  "format": "email"
+                },
+                "gender": {
+                  "type": "string",
+                  "description": "User's gender",
+                  "example": "male || female"
+                },
+                "waterRate": {
+                  "type": "number",
+                  "description": "User's water rate",
+                  "example": 1500
+                },
+                "waterNotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "noteId",
+                        "example": "6589ac824cf567a1bf12c294"
+                      },
+                      "amountWater": {
+                        "type": "number",
+                        "description": "Amount of water consumed by the user",
+                        "example": 250
+                      },
+                      "owner": {
+                        "type": "string",
+                        "description": "ownerId",
+                        "example": "6589653003eb8cee657a2155"
+                      },
+                      "date": {
+                        "type": "date",
+                        "description": "Current date",
+                        "format": "date-time"
+                      },
+                      "createdAt": {
+                        "type": "date",
+                        "description": "Current date",
+                        "format": "date-time"
+                      },
+                      "updatedAt": {
+                        "type": "date",
+                        "description": "Current date",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                },
+                "numberRecords": {
+                  "type": "number",
+                  "description": "Number records",
+                  "example": 4
+                },
+                "percentageAmountWater": {
+                  "type": "number",
+                  "description": "Percentage amount of water",
+                  "example": 100
+                }
+              }
             }
           }
         }

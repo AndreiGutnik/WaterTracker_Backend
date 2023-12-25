@@ -64,26 +64,39 @@ const updateWaterById = async (req, res) => {
 };
 
 const getWaterByDate = async (req, res) => {
-  const { _id: owner } = req.user;
-  const { currentDate } = req.query;
-
-  if (!currentDate) {
-    throw HttpError(400, "Query parameter missing");
-  }
+  const { _id: owner, name, email, gender, waterRate } = req.user;
+  const currentDate = new Date();
 
   const specifiedDate = new Date(currentDate);
   specifiedDate.setUTCHours(0, 0, 0, 0);
   const startDateISO8601 = specifiedDate.toISOString();
   specifiedDate.setUTCHours(23, 59, 59, 999);
   const endDateISO8601 = specifiedDate.toISOString();
-
-  const result = await Water.find({
+  const filter = {
     owner,
     date: { $gte: startDateISO8601, $lt: endDateISO8601 },
-  }).exec();
+  };
+
+  const waterNotes = await Water.find(filter);
+  const numberRecords = await Water.countDocuments(filter);
+  const allAmountWater = waterNotes.reduce(
+    (acc, item) => acc + item.amountWater,
+    0
+  );
+  const percentageAmountWater = (allAmountWater / waterRate) * 100;
 
   res.json({
-    result,
+    infoForDay: {
+      ownerId: owner,
+      currentDate,
+      name,
+      email,
+      gender,
+      waterRate,
+      waterNotes,
+      numberRecords,
+      percentageAmountWater,
+    },
   });
 };
 
@@ -103,13 +116,12 @@ const getWaterByMonth = async (req, res) => {
   endSpecifiedDate.setUTCHours(23, 59, 59, 999);
   const endDateISO8601 = endSpecifiedDate.toISOString();
 
-  const result = await Water.find({
-    owner,
+  const waterNotes = await Water.find({ owner }, "-createdAt -updatedAt", {
     date: { $gte: startDateISO8601, $lt: endDateISO8601 },
-  }).exec();
+  });
 
   res.json({
-    result,
+    waterNotes,
   });
 };
 
