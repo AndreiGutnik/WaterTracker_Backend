@@ -77,8 +77,8 @@ const getWaterByDate = async (req, res) => {
     date: { $gte: startDateISO8601, $lt: endDateISO8601 },
   };
 
-  const waterNotes = await Water.find(filter);
-  const numberRecords = await Water.countDocuments(filter);
+  const waterNotes = await Water.find(filter, "-owner -createdAt -updatedAt");
+  // const numberRecords = await Water.countDocuments(filter);
   const allAmountWater = waterNotes.reduce(
     (acc, item) => acc + item.amountWater,
     0
