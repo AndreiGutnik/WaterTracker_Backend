@@ -564,6 +564,124 @@
           }
         }
       }
+    },
+
+    "/api/waternotes/today": {
+      "get": {
+        "tags": ["Today"],
+        "summary": "Get a list of all the user's water consumption records for the current day",
+
+        "parameters": [
+          {
+            "in": "query",
+            "name": "currentDate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-01-15"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodayResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid time value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/waternotes/month": {
+      "get": {
+        "tags": ["Month"],
+        "summary": "Get information on the amount of water consumed for the selected month",
+
+        "parameters": [
+          {
+            "in": "query",
+            "name": "startDate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-01-01"
+            }
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2023-01-31"
+            }
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Not authorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Invalid time value"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
 
@@ -816,6 +934,44 @@
       },
 
       "EditWaterResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Time of water consumption",
+              "format": "date-time"
+            },
+            "amountWater": {
+              "type": "number",
+              "description": "Amount of water consumed",
+              "example": 250
+            }
+          }
+        }
+      },
+
+      "TodayResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Time of water consumption",
+              "format": "date-time"
+            },
+            "amountWater": {
+              "type": "number",
+              "description": "Amount of water consumed",
+              "example": 250
+            }
+          }
+        }
+      },
+
+      "MonthResponse": {
         "type": "array",
         "items": {
           "type": "object",

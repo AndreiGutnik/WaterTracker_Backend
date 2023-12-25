@@ -18,6 +18,9 @@ waterRouter.use(authenticate);
 
 waterRouter.get("/", waterController.getAllWater);
 
+waterRouter.get("/today", waterController.getWaterByDate);
+waterRouter.get("/month", waterController.getWaterByMonth);
+
 waterRouter.get("/:id", isValidId, waterController.getWaterById);
 
 waterRouter.post(
