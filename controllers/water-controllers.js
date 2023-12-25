@@ -83,7 +83,10 @@ const getWaterByDate = async (req, res) => {
     (acc, item) => acc + item.amountWater,
     0
   );
-  const percentageAmountWater = (allAmountWater / waterRate) * 100;
+  const percentageAmountWater = Math.round(
+    (allAmountWater / waterRate) * 100,
+    0
+  );
 
   res.json({
     owner: { ownerId: owner, currentDate, name, email, waterRate },
