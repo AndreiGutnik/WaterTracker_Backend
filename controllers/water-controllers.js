@@ -89,7 +89,7 @@ const getWaterByDate = async (req, res) => {
   );
 
   res.json({
-    owner: { ownerId: owner, currentDate, name, email, waterRate },
+    owner: { ownerId: owner, name, email, waterRate },
     waterNotes,
     percentageAmountWater,
   });
