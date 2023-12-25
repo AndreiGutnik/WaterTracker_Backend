@@ -77,19 +77,12 @@ const getWaterByDate = async (req, res) => {
     date: { $gte: startDateISO8601, $lt: endDateISO8601 },
   };
 
-  const waterNotes = await Water.find(filter, "-owner -createdAt -updatedAt");
-  // const numberRecords = await Water.countDocuments(filter);
-  const allAmountWater = waterNotes.reduce(
-    (acc, item) => acc + item.amountWater,
-    0
-  );
-  const percentageAmountWater = Math.round(
-    (allAmountWater / waterRate) * 100,
-    0
-  );
+  const waterNotes = await Water.find(filter, "date amountWater");
+  const allAmountWater = waterNotes.reduce((acc, item) => acc + item.amountWater, 0);
+  const percentageAmountWater = Math.round((allAmountWater / waterRate) * 100, 0);
 
   res.json({
-    owner: { ownerId: owner, name, email, waterRate },
+    owner: { id: owner, name, email, waterRate },
     waterNotes,
     percentageAmountWater,
   });
