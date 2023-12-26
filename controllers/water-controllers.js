@@ -154,9 +154,7 @@ const getWaterByMonth = async (req, res) => {
     }
   }
 
-  res.json({
-    totalData,
-  });
+  res.json(totalData);
 };
 
 export default {

@@ -965,33 +965,29 @@
       },
 
       "MonthResponse": {
-        "properties": {
-          "totalData": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "dayOfMonth": {
-                  "type": "string",
-                  "description": "Day of month",
-                  "example": "01-2023"
-                },
-                "waterRate": {
-                  "type": "number",
-                  "description": "User's daily norm of water",
-                  "example": 2000
-                },
-                "percent": {
-                  "type": "number",
-                  "description": "The percentage of consumed water from the daily norm",
-                  "example": 100
-                },
-                "count": {
-                  "type": "number",
-                  "description": "Number of uses",
-                  "example": 5
-                }
-              }
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "dayOfMonth": {
+              "type": "string",
+              "description": "Day of month",
+              "example": "01-2023"
+            },
+            "waterRate": {
+              "type": "number",
+              "description": "User's daily norm of water",
+              "example": 2000
+            },
+            "percent": {
+              "type": "number",
+              "description": "The percentage of consumed water from the daily norm",
+              "example": 100
+            },
+            "count": {
+              "type": "number",
+              "description": "Number of uses",
+              "example": 5
             }
           }
         }
