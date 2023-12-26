@@ -155,9 +155,6 @@ const getWaterByMonth = async (req, res) => {
   }
 
   res.json({
-    owner: { id: owner, name, email, waterRate },
-    waterNotes,
-    totalRecords: total,
     totalData,
   });
 };
