@@ -617,22 +617,11 @@
         "parameters": [
           {
             "in": "query",
-            "name": "startDate",
+            "name": "date",
             "required": true,
             "schema": {
               "type": "string",
-              "format": "date",
-              "example": "2023-01-01"
-            }
-          },
-          {
-            "in": "query",
-            "name": "endDate",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date",
-              "example": "2023-01-31"
+              "example": "01-2023"
             }
           }
         ],
@@ -994,7 +983,7 @@
           },
           "percentageAmountWater": {
             "type": "number",
-            "description": "Percentage amount of water",
+            "description": "Percentage amount of water, %",
             "example": 100
           }
         }
@@ -1005,15 +994,25 @@
         "items": {
           "type": "object",
           "properties": {
-            "date": {
+            "dayOfMonth": {
               "type": "string",
-              "description": "Time of water consumption",
-              "format": "date-time"
+              "description": "Day of month",
+              "example": "01-2023"
             },
-            "amountWater": {
+            "waterRate": {
               "type": "number",
-              "description": "Amount of water consumed",
-              "example": 250
+              "description": "User's daily norm of water",
+              "example": 2000
+            },
+            "percent": {
+              "type": "number",
+              "description": "The percentage of consumed water from the daily norm",
+              "example": 100
+            },
+            "count": {
+              "type": "number",
+              "description": "Number of uses",
+              "example": 5
             }
           }
         }

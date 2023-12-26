@@ -64,7 +64,7 @@ const updateWaterById = async (req, res) => {
 };
 
 const getWaterByDate = async (req, res) => {
-  const { _id: owner, name, email, gender, waterRate } = req.user;
+  const { _id: owner, name, email, waterRate } = req.user;
   const currentDate = new Date();
 
   const specifiedDate = new Date(currentDate);
@@ -78,8 +78,14 @@ const getWaterByDate = async (req, res) => {
   };
 
   const waterNotes = await Water.find(filter, "date amountWater");
-  const allAmountWater = waterNotes.reduce((acc, item) => acc + item.amountWater, 0);
-  const percentageAmountWater = Math.round((allAmountWater / waterRate) * 100, 0);
+  const allAmountWater = waterNotes.reduce(
+    (acc, item) => acc + item.amountWater,
+    0
+  );
+  const percentageAmountWater = Math.round(
+    (allAmountWater / waterRate) * 100,
+    0
+  );
 
   res.json({
     owner: { id: owner, name, email, waterRate },
@@ -89,27 +95,71 @@ const getWaterByDate = async (req, res) => {
 };
 
 const getWaterByMonth = async (req, res) => {
-  const { _id: owner } = req.user;
-  const { startDate, endDate } = req.query;
+  const { _id: owner, name, email, waterRate } = req.user;
+  const { date } = req.query;
+  console.log(date);
 
-  if (!startDate || !endDate) {
-    throw HttpError(400, "Query parameter missing");
+  const [monthStr, yearStr] = date.split("-");
+
+  const year = Number(yearStr);
+  const month = Number(monthStr) - 1;
+
+  const numberOfDays = new Date(year, month + 1, 0).getDate();
+
+  const firstDayOfMonth = new Date(year, month, 1);
+  const lastDayOfMonth = new Date(
+    firstDayOfMonth.getFullYear(),
+    firstDayOfMonth.getMonth() + 1,
+    0
+  );
+  const filter = {
+    owner,
+    date: { $gte: firstDayOfMonth, $lt: lastDayOfMonth },
+  };
+
+  const waterNotes = await Water.find(filter, "date amountWater");
+  const total = await Water.countDocuments(filter);
+
+  const totalData = [];
+
+  for (let i = 1; i <= numberOfDays; i++) {
+    let paddedMonth = i;
+    if (i < 10) {
+      paddedMonth = i.toString().padStart(2, "0");
+    }
+    let dat = new Date(`${year}-${month + 1}-${paddedMonth}`);
+
+    const Day = dat.getDate();
+    const Month = dat.toLocaleString("en-US", { month: "long" });
+
+    let dayOfMonth = `${Day}, ${Month}`;
+
+    let sumAmountWater = 0;
+    let count = 0;
+    const result = [...waterNotes].map((item) => {
+      if (
+        item.date.toISOString().slice(0, 10) === dat.toISOString().slice(0, 10)
+      ) {
+        sumAmountWater += item.amountWater;
+        count += 1;
+      }
+    });
+    if (sumAmountWater) {
+      let percent = Math.round((sumAmountWater / waterRate) * 100, 0);
+      totalData.push({
+        dayOfMonth,
+        waterRate,
+        percent,
+        numberRecords: count,
+      });
+    }
   }
 
-  const startSpecifiedDate = new Date(startDate);
-  startSpecifiedDate.setUTCHours(0, 0, 0, 0);
-  const startDateISO8601 = startSpecifiedDate.toISOString();
-
-  const endSpecifiedDate = new Date(endDate);
-  endSpecifiedDate.setUTCHours(23, 59, 59, 999);
-  const endDateISO8601 = endSpecifiedDate.toISOString();
-
-  const waterNotes = await Water.find({ owner }, "-createdAt -updatedAt", {
-    date: { $gte: startDateISO8601, $lt: endDateISO8601 },
-  });
-
   res.json({
+    owner: { id: owner, name, email, waterRate },
     waterNotes,
+    totalRecords: total,
+    totalData,
   });
 };
 
