@@ -972,7 +972,7 @@
             "dayOfMonth": {
               "type": "string",
               "description": "Day of month",
-              "example": "01-2023"
+              "example": "05, April"
             },
             "waterRate": {
               "type": "number",
