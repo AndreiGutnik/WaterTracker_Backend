@@ -97,7 +97,6 @@ const getWaterByDate = async (req, res) => {
 const getWaterByMonth = async (req, res) => {
   const { _id: owner, name, email, waterRate } = req.user;
   const { date } = req.query;
-  console.log(date);
 
   const [monthStr, yearStr] = date.split("-");
 
