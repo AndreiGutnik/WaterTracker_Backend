@@ -63,7 +63,10 @@ const signin = async (req, res) => {
   await User.findByIdAndUpdate(user._id, { token });
   res.json({
     user: {
+      name: user.name,
       email: user.email,
+      gender: user.gender,
+      waterRate: user.waterRate,
     },
     token,
   });
