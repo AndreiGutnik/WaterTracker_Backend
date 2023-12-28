@@ -73,12 +73,25 @@ const signin = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { email, name, gender, waterRate } = req.user;
+  const {
+    _id,
+    email,
+    name,
+    gender,
+    waterRate,
+    avatarURL,
+    createdAt,
+    updatedAt,
+  } = req.user;
   res.json({
+    _id,
     name,
     email,
     gender,
     waterRate,
+    avatarURL,
+    createdAt,
+    updatedAt,
   });
 };
 
@@ -89,15 +102,13 @@ const signout = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { _id, name, email, gender, waterRate, avatarURL } = req.user;
+  const { _id } = req.user;
   const result = await User.findOneAndUpdate(_id, req.body);
   if (!result) {
     throw HttpError(404, `Not found`);
   }
   const user = await User.findById(_id, "-password -token");
-  res.json({
-    user,
-  });
+  res.json(user);
 };
 
 const waterRate = async (req, res) => {

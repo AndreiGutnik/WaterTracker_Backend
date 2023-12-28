@@ -178,7 +178,7 @@
       }
     },
 
-    "/api/auth/avatars": {
+    "/api/user/avatars": {
       "patch": {
         "tags": ["User"],
         "summary": "Upload user avatar",
@@ -239,7 +239,7 @@
       }
     },
 
-    "/api/auth/current": {
+    "/api/user/current": {
       "get": {
         "tags": ["User"],
         "summary": "User information",
@@ -272,7 +272,7 @@
       }
     },
 
-    "/api/auth": {
+    "/api/user": {
       "patch": {
         "tags": ["User"],
         "summary": "Updating user information",
@@ -328,7 +328,7 @@
       }
     },
 
-    "/api/auth/waterrate": {
+    "/api/user/waterrate": {
       "patch": {
         "tags": ["WaterRate"],
         "summary": "Updating the amount of water the user should consume",
@@ -685,15 +685,15 @@
       "RegistrationResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "user"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email"
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              }
+            }
           }
         }
       },
@@ -721,10 +721,25 @@
           "user": {
             "type": "object",
             "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "format": "User"
+              },
               "email": {
                 "type": "string",
                 "description": "User's email",
                 "format": "email"
+              },
+              "gender": {
+                "type": "string",
+                "description": "User's gender",
+                "example": "male || female"
+              },
+              "waterRate": {
+                "type": "number",
+                "description": "Daily water requirement",
+                "example": "2000"
               }
             }
           },
@@ -739,6 +754,11 @@
       "CurrentUserResponse": {
         "type": "object",
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "6589653003eb8cee657a2155"
+          },
           "name": {
             "type": "string",
             "description": "User's name",
@@ -758,6 +778,21 @@
             "type": "number",
             "description": "User's gender",
             "example": 1500
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "http://res.cloudinary.com/de2jtjawf/image/upload/v1703802348/WaterTracker/avatars/znf1ix7cjicz2jgib9fo.jpg"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "description": "User's date created",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "date-time",
+            "description": "User's date updated",
+            "format": "date-time"
           }
         }
       },
@@ -798,10 +833,15 @@
       "UpdateResponse": {
         "type": "object",
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "6589653003eb8cee657a2155"
+          },
           "name": {
             "type": "string",
             "description": "User's name",
-            "example": "User"
+            "example": "user"
           },
           "email": {
             "type": "string",
@@ -810,8 +850,28 @@
           },
           "gender": {
             "type": "string",
-            "description": "Gender's name",
+            "description": "User's gender",
             "example": "male || female"
+          },
+          "waterRate": {
+            "type": "number",
+            "description": "User's gender",
+            "example": 1500
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "http://res.cloudinary.com/de2jtjawf/image/upload/v1703802348/WaterTracker/avatars/znf1ix7cjicz2jgib9fo.jpg"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "description": "User's date created",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "date-time",
+            "description": "User's date updated",
+            "format": "date-time"
           }
         }
       },
@@ -868,6 +928,26 @@
             "type": "number",
             "description": "Amount of water consumed",
             "example": 250
+          },
+          "owner": {
+            "type": "string",
+            "description": "User's id",
+            "example": "6589653003eb8cee657a2155"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Note's id",
+            "example": "658e004ee30d5287149784d2"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "description": "User's date created",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "date-time",
+            "description": "User's date updated",
+            "format": "date-time"
           }
         }
       },
@@ -892,6 +972,11 @@
       "EditWaterResponse": {
         "type": "object",
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Note's id",
+            "example": "658e004ee30d5287149784d2"
+          },
           "date": {
             "type": "string",
             "description": "Time of water consumption",
@@ -901,6 +986,21 @@
             "type": "number",
             "description": "Amount of water consumed",
             "example": 250
+          },
+          "owner": {
+            "type": "string",
+            "description": "User's id",
+            "example": "6589653003eb8cee657a2155"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "description": "User's date created",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "date-time",
+            "description": "User's date updated",
+            "format": "date-time"
           }
         }
       },
@@ -915,21 +1015,6 @@
                 "type": "string",
                 "description": "ownerId",
                 "example": "6589653003eb8cee657a2155"
-              },
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "User"
-              },
-              "email": {
-                "type": "email",
-                "description": "User's email",
-                "format": "email"
-              },
-              "waterRate": {
-                "type": "number",
-                "description": "User's water rate",
-                "example": 1500
               }
             }
           },
@@ -943,15 +1028,15 @@
                   "description": "noteId",
                   "example": "6589ac824cf567a1bf12c294"
                 },
-                "amountWater": {
-                  "type": "number",
-                  "description": "Amount of water consumed by the user",
-                  "example": 250
-                },
                 "date": {
                   "type": "date",
                   "description": "Current date",
                   "format": "date-time"
+                },
+                "amountWater": {
+                  "type": "number",
+                  "description": "Amount of water consumed by the user",
+                  "example": 250
                 }
               }
             }
