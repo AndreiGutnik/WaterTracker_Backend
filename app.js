@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use("/api/users", authRouter);
+app.use("/api/auth", authRouter);
 // app.use("/api/contacts", contactsRouter);
 app.use("/api/waternotes", waterRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
