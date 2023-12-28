@@ -86,12 +86,12 @@ const signout = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { _id } = req.user;
-  const user = await User.findOneAndUpdate(_id, req.body);
-  if (!user) {
+  const { _id, name, email, gender, waterRate, avatarURL } = req.user;
+  const result = await User.findOneAndUpdate(_id, req.body);
+  if (!result) {
     throw HttpError(404, `Not found`);
   }
-
+  const user = await User.findById(_id, "-password -token");
   res.json({
     user,
   });

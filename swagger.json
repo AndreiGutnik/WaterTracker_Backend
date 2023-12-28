@@ -37,7 +37,7 @@
   ],
 
   "paths": {
-    "/users/register": {
+    "/api/auth/register": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -91,7 +91,7 @@
       }
     },
 
-    "/users/login": {
+    "/api/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User authorization",
@@ -145,7 +145,7 @@
       }
     },
 
-    "/users/logout": {
+    "/api/auth/logout": {
       "post": {
         "tags": ["Auth"],
         "summary": "User logout",
@@ -178,7 +178,7 @@
       }
     },
 
-    "/users/avatars": {
+    "/api/auth/avatars": {
       "patch": {
         "tags": ["User"],
         "summary": "Upload user avatar",
@@ -239,7 +239,7 @@
       }
     },
 
-    "/users/current": {
+    "/api/auth/current": {
       "get": {
         "tags": ["User"],
         "summary": "User information",
@@ -272,7 +272,7 @@
       }
     },
 
-    "/users": {
+    "/api/auth": {
       "patch": {
         "tags": ["User"],
         "summary": "Updating user information",
@@ -328,7 +328,7 @@
       }
     },
 
-    "/users/waterrate": {
+    "/api/auth/waterrate": {
       "patch": {
         "tags": ["WaterRate"],
         "summary": "Updating the amount of water the user should consume",
