@@ -78,8 +78,14 @@ const getWaterByDate = async (req, res) => {
   };
 
   const waterNotes = await Water.find(filter, "date amountWater");
-  const allAmountWater = waterNotes.reduce((acc, item) => acc + item.amountWater, 0);
-  const percentageAmountWater = Math.round((allAmountWater / waterRate) * 100, 0);
+  const allAmountWater = waterNotes.reduce(
+    (acc, item) => acc + item.amountWater,
+    0
+  );
+  const percentageAmountWater = Math.round(
+    (allAmountWater / waterRate) * 100,
+    0
+  );
 
   res.json({
     owner: { id: owner },
@@ -100,7 +106,11 @@ const getWaterByMonth = async (req, res) => {
   const numberOfDays = new Date(year, month + 1, 0).getDate();
 
   const firstDayOfMonth = new Date(year, month, 1);
-  const lastDayOfMonth = new Date(firstDayOfMonth.getFullYear(), firstDayOfMonth.getMonth() + 1, 0);
+  const lastDayOfMonth = new Date(
+    firstDayOfMonth.getFullYear(),
+    firstDayOfMonth.getMonth() + 1,
+    0
+  );
   const filter = {
     owner,
     date: { $gte: firstDayOfMonth, $lt: lastDayOfMonth },
@@ -126,7 +136,9 @@ const getWaterByMonth = async (req, res) => {
     let sumAmountWater = 0;
     let count = 0;
     const result = [...waterNotes].map((item) => {
-      if (item.date.toISOString().slice(0, 10) === dat.toISOString().slice(0, 10)) {
+      if (
+        item.date.toISOString().slice(0, 10) === dat.toISOString().slice(0, 10)
+      ) {
         sumAmountWater += item.amountWater;
         count += 1;
       }

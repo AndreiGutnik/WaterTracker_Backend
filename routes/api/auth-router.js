@@ -17,6 +17,7 @@ import {
 } from "../../schemas/users-schemas.js";
 
 const authRouter = express.Router();
+export const userRouter = express.Router();
 
 //upload.array("avatar", 6);
 //upload.fields([{name:"avatar", maxCount: 1}])
@@ -40,13 +41,13 @@ authRouter.post(
 
 // authRouter.post("/verify", isEmptyBody, validateBody(userEmailSchema), authController.resendVerify);
 
-authRouter.get("/current", authenticate, authController.getCurrent);
-
 authRouter.post("/logout", authenticate, authController.signout);
 
-authRouter.patch("/", authenticate, authController.updateUser);
+userRouter.get("/current", authenticate, authController.getCurrent);
 
-authRouter.patch(
+userRouter.patch("/", authenticate, authController.updateUser);
+
+userRouter.patch(
   "/waterrate",
   authenticate,
   isEmptyBodyWaterRate,
@@ -54,7 +55,7 @@ authRouter.patch(
   authController.waterRate
 );
 
-authRouter.patch(
+userRouter.patch(
   "/avatars",
   authenticate,
   upload.single("avatar"),
