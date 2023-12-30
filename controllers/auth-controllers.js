@@ -67,7 +67,7 @@ const signin = async (req, res) => {
       email: user.email,
       gender: user.gender,
       waterRate: user.waterRate,
-      avatarURL: avatarURL,
+      avatarURL: user.avatarURL,
     },
     token,
   });
