@@ -67,22 +67,14 @@ const signin = async (req, res) => {
       email: user.email,
       gender: user.gender,
       waterRate: user.waterRate,
+      avatarURL: avatarURL,
     },
     token,
   });
 };
 
 const getCurrent = async (req, res) => {
-  const {
-    _id,
-    email,
-    name,
-    gender,
-    waterRate,
-    avatarURL,
-    createdAt,
-    updatedAt,
-  } = req.user;
+  const { _id, email, name, gender, waterRate, avatarURL, createdAt, updatedAt } = req.user;
   res.json({
     _id,
     name,
