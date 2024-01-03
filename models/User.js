@@ -32,7 +32,7 @@ const userchema = new Schema(
     waterRate: {
       type: Number,
       max: 15000,
-      default: 0,
+      default: 2000,
     },
     avatarURL: {
       type: String,
