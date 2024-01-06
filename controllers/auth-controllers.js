@@ -95,11 +95,29 @@ const signout = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { _id } = req.user;
-  const result = await User.findOneAndUpdate(_id, req.body);
+  const user = await User.findOne(_id);
+  if (!user) {
+    throw HttpError(401, "Email or password is wrong");
+  }
+  if (req.user.password) {
+    const { password } = req.user;
+    const passwordCompare = await bcrypt.compare(password, user.password);
+    if (!passwordCompare) {
+      throw HttpError(401, "Password is wrong");
+    }
+  }
+
+  if (req.user.newpassword) {
+    const { newpassword } = req.user;
+    const hashPassword = await bcrypt.hash(newpassword, 10);
+  }
+
+  const result = await User.findOneAndUpdate(_id, { hashPassword });
   if (!result) {
     throw HttpError(404, `Not found`);
   }
-  const user = await User.findById(_id, "-password -token");
+
+  // const user = await User.findById(_id, "-password -token");
   res.json(user);
 };
 

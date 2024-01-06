@@ -18,6 +18,11 @@ const userchema = new Schema(
       maxLength: 64,
       required: true,
     },
+    newpassword: {
+      type: String,
+      minLength: 8,
+      maxLength: 64,
+    },
     gender: {
       type: String,
       enum: ["male", "female"],
