@@ -95,7 +95,7 @@ const signout = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { _id } = req.user;
-  const user = await User.findOne(_id);
+  const user = await User.findById(_id, "-password -token");
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
@@ -117,7 +117,6 @@ const updateUser = async (req, res) => {
     throw HttpError(404, `Not found`);
   }
 
-  // const user = await User.findById(_id, "-password -token");
   res.json(user);
 };
 
