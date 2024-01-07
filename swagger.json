@@ -677,7 +677,7 @@
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "format": "password"
           }
         }
       },
@@ -710,7 +710,7 @@
           "password": {
             "type": "string",
             "description": "User's password",
-            "example": "qwerty123"
+            "format": "password"
           }
         }
       },
@@ -826,6 +826,16 @@
             "type": "string",
             "description": "Gender's name",
             "example": "male"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "format": "password"
+          },
+          "newpassword": {
+            "type": "string",
+            "description": "User's newpassword",
+            "format": "password"
           }
         }
       },

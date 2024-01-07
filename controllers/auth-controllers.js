@@ -108,10 +108,12 @@ const updateUser = async (req, res) => {
   }
 
   if (req.body.newpassword) {
-    const { name, email, gender, newpassword } = req.body;
+    const { newpassword } = req.body;
     const hashPassword = await bcrypt.hash(newpassword, 10);
-    const result = await User.findOneAndUpdate(_id, { ...req.body, password: hashPassword });
-    user = await User.findById(_id, "-newpassword -password -token");
+    const newBody = req.body;
+    delete newBody.newpassword;
+    const result = await User.findOneAndUpdate(_id, { ...newBody, password: hashPassword });
+    user = await User.findById(_id, "-password -token");
   }
 
   if (!req.body.password && !req.body.newpassword) {
