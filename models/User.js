@@ -41,6 +41,7 @@ const userchema = new Schema(
     },
     avatarURL: {
       type: String,
+      default: "https://res.cloudinary.com/dhobomrxe/image/upload/v1704619800/avatar_ckqfza.png",
       required: true,
     },
     token: {
