@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import fs from "fs/promises";
 import path from "path";
-import gravatar from "gravatar";
+// import gravatar from "gravatar";
 // import { nanoid } from "nanoid";
 
 import "dotenv/config";
@@ -19,13 +19,12 @@ const signup = async (req, res) => {
   if (user) {
     throw HttpError(409, "Email is use");
   }
-
   const hashPassword = await bcrypt.hash(password, 10);
   // const verificationToken = nanoid();
-  const avatarURL = gravatar.url(email);
+  // const avatarURL = gravatar.url(email);
   const newUser = await User.create({
     ...req.body,
-    avatarURL,
+    // avatarURL,
     password: hashPassword,
     // verificationToken,
   });
@@ -112,7 +111,7 @@ const updateUser = async (req, res) => {
     const hashPassword = await bcrypt.hash(newpassword, 10);
   }
 
-  const result = await User.findOneAndUpdate(_id, { hashPassword });
+  const result = await User.findOneAndUpdate(_id, { password: hashPassword });
   if (!result) {
     throw HttpError(404, `Not found`);
   }
