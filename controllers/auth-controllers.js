@@ -94,21 +94,19 @@ const signout = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { _id } = req.user;
+  const { password, newPassword } = req.body;
   let user = await User.findById(_id);
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
 
-  if (req.body.password) {
-    const { password } = req.body;
+  if (!password && newPassword) {
+    throw HttpError(401, "Password is wrong");
+  } else if (password && newPassword) {
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare) {
       throw HttpError(401, "Password is wrong");
     }
-  }
-
-  if (req.body.newPassword) {
-    const { newPassword } = req.body;
     const hashPassword = await bcrypt.hash(newPassword, 10);
     const newBody = req.body;
     delete newBody.newPassword;
@@ -116,7 +114,7 @@ const updateUser = async (req, res) => {
     user = await User.findById(_id, "-password -token");
   }
 
-  if (!req.body.password && !req.body.newPassword) {
+  if (!password && !newPassword) {
     const newBody = req.body;
     delete newBody.password;
     delete newBody.newPassword;
