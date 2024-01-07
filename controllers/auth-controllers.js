@@ -107,17 +107,20 @@ const updateUser = async (req, res) => {
     }
   }
 
-  if (req.body.newpassword) {
-    const { newpassword } = req.body;
-    const hashPassword = await bcrypt.hash(newpassword, 10);
+  if (req.body.newPassword) {
+    const { newPassword } = req.body;
+    const hashPassword = await bcrypt.hash(newPassword, 10);
     const newBody = req.body;
-    delete newBody.newpassword;
+    delete newBody.newPassword;
     const result = await User.findOneAndUpdate(_id, { ...newBody, password: hashPassword });
     user = await User.findById(_id, "-password -token");
   }
 
-  if (!req.body.password && !req.body.newpassword) {
-    const result = await User.findOneAndUpdate(_id, req.body);
+  if (!req.body.password && !req.body.newPassword) {
+    const newBody = req.body;
+    delete newBody.password;
+    delete newBody.newPassword;
+    const result = await User.findOneAndUpdate(_id, newBody);
     if (!result) {
       throw HttpError(404, `Not found`);
     }

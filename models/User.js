@@ -18,7 +18,7 @@ const userchema = new Schema(
       maxLength: 64,
       required: true,
     },
-    newpassword: {
+    newPassword: {
       type: String,
       minLength: 8,
       maxLength: 64,
