@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.2",
   "info": {
     "version": "1.3.2",
     "title": "WaterTracker Backend",
@@ -785,12 +785,12 @@
             "example": "http://res.cloudinary.com/de2jtjawf/image/upload/v1703802348/WaterTracker/avatars/znf1ix7cjicz2jgib9fo.jpg"
           },
           "createdAt": {
-            "type": "date-time",
+            "type": "string",
             "description": "User's date created",
             "format": "date-time"
           },
           "updatedAt": {
-            "type": "date-time",
+            "type": "string",
             "description": "User's date updated",
             "format": "date-time"
           }
